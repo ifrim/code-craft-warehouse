@@ -3,6 +3,7 @@ class Title {
     this.title = title;
     this.artist = artist;
     this.count = count;
+    this.reviews = [];
   }
 }
 
@@ -22,6 +23,10 @@ class Warehouse {
   add(titles) {
     this.titles = [...this.titles, ...titles];
   }
+
+  updateStock(title, count) {
+    this.getByTitle(title).count = count;
+  }
 }
 
 class RecordLabel {
@@ -31,6 +36,23 @@ class RecordLabel {
 
   send(cds) {
     this.warehouse.add(cds);
+  }
+}
+
+class Customer {
+  constructor(warehouse) {
+    this.warehouse = warehouse;
+  }
+
+  buy(title, paymentValid) {
+    let titleObj = this.warehouse.getByTitle(title);
+    if (titleObj.count === 0 || !paymentValid) return false;
+    this.warehouse.updateStock(title, titleObj.count - 1);
+    return true;
+  }
+
+  addReview(title, review) {
+    this.warehouse.getByTitle(title).reviews.push(review);
   }
 }
 
@@ -55,5 +77,28 @@ describe('warehouse tests', () => {
     let warehouse = new Warehouse();
     warehouse.add([new Title('Thriller', 'MJ', 1)]);
     expect(warehouse.getByArtist('MJ').count).toBe(1);
+  });
+
+  it('when you try to buy a title that is not in the warehouse the process fails', () => {
+    let warehouse = new Warehouse();
+    let customer = new Customer(warehouse);
+    expect(customer.buy('Thriller', true)).toBe(false);
+  });
+
+  it('after a successfull buy the warehouse stock decreases by 1', () => {
+    let warehouse = new Warehouse();
+    let titleCount = 2
+    warehouse.add([new Title('Thriller', 'MJ', titleCount)]);
+    let customer = new Customer(warehouse);
+    customer.buy('Thriller', true);
+    expect(warehouse.getByTitle('Thriller').count).toBe(titleCount - 1);
+  });
+
+  it('a customer can review a title', () => {
+    let warehouse = new Warehouse();
+    warehouse.add([new Title('Thriller', 'MJ', 2)]);
+    let customer = new Customer(warehouse);
+    customer.addReview('Thriller', { rating: 10, content: 'The best' });
+    expect(warehouse.getByTitle('Thriller').reviews.length).toBe(1);
   });
 });
