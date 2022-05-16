@@ -1,0 +1,14 @@
+{
+  "name": "code-craft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "aaa.test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^28.1.0"
+  }
+}
