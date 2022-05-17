@@ -1,9 +1,12 @@
 class Title {
-  constructor(title, artist, count) {
+  constructor(title, artist) {
     this.title = title;
     this.artist = artist;
-    this.count = count;
     this.reviews = [];
+  }
+
+  addReview(review) {
+    this.reviews.push(review);
   }
 }
 

@@ -4,11 +4,11 @@ class Warehouse {
   }
 
   getByTitle(title) {
-    return this.titles.find(cd => cd.title === title) ?? { count: 0 };
+    return this.titles.find(cd => cd.title.title === title) ?? { count: 0 };
   }
 
   getByArtist(artist) {
-    return this.titles.find(cd => cd.artist === artist) ?? { count: 0 };
+    return this.titles.find(cd => cd.title.artist === artist) ?? { count: 0 };
   }
 
   add(titles) {

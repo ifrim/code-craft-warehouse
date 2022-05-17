@@ -11,7 +11,7 @@ class Customer {
   }
 
   addReview(title, review) {
-    this.warehouse.getByTitle(title).reviews.push(review);
+    this.warehouse.getByTitle(title).title.addReview(review);
   }
 }
 
