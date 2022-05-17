@@ -8,6 +8,10 @@ class Title {
   addReview(review) {
     this.reviews.push(review);
   }
+
+  getTotalReviews() {
+    return this.reviews.length;
+  }
 }
 
 export default Title;

@@ -46,6 +46,6 @@ describe('warehouse tests', () => {
     warehouse.add([{ title: new Title('Thriller', 'MJ'), count: 2 }]);
     let customer = new Customer(warehouse);
     customer.addReview('Thriller', { rating: 10, content: 'The best' });
-    expect(warehouse.getByTitle('Thriller').title.reviews.length).toBe(1);
+    expect(warehouse.getByTitle('Thriller').title.getTotalReviews()).toBe(1);
   });
 });
