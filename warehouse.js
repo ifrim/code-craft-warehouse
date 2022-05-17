@@ -1,6 +1,9 @@
+import Chart from './chart';
+
 class Warehouse {
   constructor(titles = []) {
     this.titles = titles;
+    this.chart = new Chart();
   }
 
   getByTitle(title) {
@@ -19,6 +22,15 @@ class Warehouse {
 
   getByArtist(artist) {
     return this.titles.find(cd => cd.title.artist === artist) ?? { count: 0 };
+  }
+
+  getPriceForTitle(title) {
+    let price = this.titles.find(cd => cd.title.title === title).price;
+    if (this.chart.isTop100(title)) {
+      let competitorPrice = this.chart.getCompetitorPrice(title);
+      return Math.min(price, competitorPrice - 1);
+    }
+    return price;
   }
 
   add(titles) {
