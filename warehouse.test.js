@@ -1,60 +1,7 @@
-class Title {
-  constructor(title, artist, count) {
-    this.title = title;
-    this.artist = artist;
-    this.count = count;
-    this.reviews = [];
-  }
-}
-
-class Warehouse {
-  constructor(titles = []) {
-    this.titles = titles;
-  }
-
-  getByTitle(title) {
-    return this.titles.find(cd => cd.title === title) ?? { count: 0 };
-  }
-
-  getByArtist(artist) {
-    return this.titles.find(cd => cd.artist === artist) ?? { count: 0 };
-  }
-
-  add(titles) {
-    this.titles = [...this.titles, ...titles];
-  }
-
-  updateStock(title, count) {
-    this.getByTitle(title).count = count;
-  }
-}
-
-class RecordLabel {
-  constructor(warehouse) {
-    this.warehouse = warehouse;
-  }
-
-  send(cds) {
-    this.warehouse.add(cds);
-  }
-}
-
-class Customer {
-  constructor(warehouse) {
-    this.warehouse = warehouse;
-  }
-
-  buy(title, paymentValid) {
-    let titleObj = this.warehouse.getByTitle(title);
-    if (titleObj.count === 0 || !paymentValid) return false;
-    this.warehouse.updateStock(title, titleObj.count - 1);
-    return true;
-  }
-
-  addReview(title, review) {
-    this.warehouse.getByTitle(title).reviews.push(review);
-  }
-}
+import Customer from './customer';
+import Title from './title';
+import Warehouse from './warehouse';
+import RecordLabel from './record-label';
 
 describe('warehouse tests', () => {
   it('add CD', () => {
