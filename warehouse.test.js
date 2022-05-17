@@ -8,11 +8,11 @@ describe('warehouse tests', () => {
     let warehouse = new Warehouse();
     let recordLabel = new RecordLabel(warehouse);
 
-    let titleCount = warehouse.getByTitle('Thriller').count;
+    let titleCount = warehouse.getStockByTitle('Thriller');
     let cdsList = [{ title: new Title('Thriller', 'MJ'), count: 2 }];
     recordLabel.send(cdsList);
 
-    expect(warehouse.getByTitle('Thriller').count).toBe(titleCount + cdsList[0].count);
+    expect(warehouse.getStockByTitle('Thriller')).toBe(titleCount + cdsList[0].count);
   });
 
   it('searching by artist in an empty warehouse should return an empty list', () => {
@@ -38,7 +38,7 @@ describe('warehouse tests', () => {
     warehouse.add([{ title: new Title('Thriller', 'MJ'), count: titleCount }]);
     let customer = new Customer(warehouse);
     customer.buy('Thriller', true);
-    expect(warehouse.getByTitle('Thriller').count).toBe(titleCount - 1);
+    expect(warehouse.getStockByTitle('Thriller')).toBe(titleCount - 1);
   });
 
   it('a customer can review a title', () => {
@@ -46,6 +46,6 @@ describe('warehouse tests', () => {
     warehouse.add([{ title: new Title('Thriller', 'MJ'), count: 2 }]);
     let customer = new Customer(warehouse);
     customer.addReview('Thriller', { rating: 10, content: 'The best' });
-    expect(warehouse.getByTitle('Thriller').title.getTotalReviews()).toBe(1);
+    expect(warehouse.getByTitle('Thriller').getTotalReviews()).toBe(1);
   });
 });

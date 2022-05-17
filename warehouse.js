@@ -4,7 +4,17 @@ class Warehouse {
   }
 
   getByTitle(title) {
-    return this.titles.find(cd => cd.title.title === title) ?? { count: 0 };
+    return this.titles.find(cd => cd.title.title === title).title;
+  }
+
+  getStockByTitle(title) {
+    return this.titles.find(cd => cd.title.title === title)?.count ?? 0;
+  }
+
+  setStockByTitle(title, count) {
+    let t = this.titles.find(cd => cd.title.title === title);
+    if (!t) return;
+    t.count = count;
   }
 
   getByArtist(artist) {
@@ -13,10 +23,6 @@ class Warehouse {
 
   add(titles) {
     this.titles = [...this.titles, ...titles];
-  }
-
-  updateStock(title, count) {
-    this.getByTitle(title).count = count;
   }
 }
 
